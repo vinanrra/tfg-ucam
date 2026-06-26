@@ -1,0 +1,31 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: aoassistant_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${mysqldb:-aodb}
+      MYSQL_USER: ${mysqlUser:-mysqluser}
+      MYSQL_PASSWORD: ${mysqlPass:-mysqlpass}
+      MYSQL_ROOT_PASSWORD: ${mysqlPass:-mysqlpass}
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  bot:
+    build: .
+    container_name: AoAssistant
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - mysqlUser=${mysqlUser:-mysqluser}
+      - mysqlPass=${mysqlPass:-mysqlpass}
+      - mysqlHost=${mysqlHost:-db}
+      - mysqlPort=${mysqlPort:-3306}
+      - mysqldb=${mysqldb:-aodb}
+      - TOKEN=${TOKEN:-MTUxNjg0OTEzNjgwMzI1NDQ3Mw.GKnvqu.lpJQPRQnPtIGW21zidQpPTDeNhN-tzjF4Tpbq8}
+    volumes:
+      - ./logs:/usr/src/app/logs
+
+volumes:
+  mysql_data:
