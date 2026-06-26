@@ -22,10 +22,6 @@ services:
 
 ## Invite link
 
-Those will be the permissions that the bot will have
-
-![Permissions](./images/permissions_link.png)
-
 ### Link
 
 ```
